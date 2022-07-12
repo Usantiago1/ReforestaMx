@@ -5,12 +5,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Icon, Tab, TabBar, TabView } from "@ui-kitten/components";
 
 //Screens 
-import Login from './Screens/Login';
-import AddUser from './Screens/AddUser';
+import Login from './src/Screens/Login';
+import AddUser from './src/Screens/AddUser';
 
-import Home from "./TabScreen/Home";
-import Prueba1 from "./TabScreen/Prueba1";
-import Prueba2 from "./TabScreen/Prueba2";
+import Home from "./src/TabScreen/Home";
+import Prueba1 from "./src/TabScreen/Prueba1";
+import Prueba2 from "./src/TabScreen/Prueba2";
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();

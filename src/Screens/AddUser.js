@@ -20,6 +20,12 @@ const AddUser = () =>{
         setIconPassword(!iconPassword);
     }
 
+    const renderIcon = (props) => (
+        <TouchableWithoutFeedback onPress={secureEntry}>
+          <Icon {...props} name={iconPassword ? 'eye-off' : 'eye'}/>
+        </TouchableWithoutFeedback>
+      );
+
     return(
         <>
     <ScrollView>
@@ -30,7 +36,8 @@ const AddUser = () =>{
             <Input style={styles.input} size='large' placeholder="Correo"></Input>
             
             <Input 
-                secureTextEntry={iconPassword} 
+                secureTextEntry={iconPassword}
+                accessoryRight={renderIcon} 
                 style={styles.input} 
                 size='large' 
                 placeholder="Contraseña"
