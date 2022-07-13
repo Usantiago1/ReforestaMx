@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
-import { View,Button, StyleSheet,ScrollView,TouchableWithoutFeedback} from "react-native";
+import { View,
+        Alert,  
+        StyleSheet,
+        ScrollView,
+        TouchableWithoutFeedback} from "react-native";
 
-import { Input, Text,  Icon} from "@ui-kitten/components";
+import { Input,
+          Text,
+          Button,
+          Icon} from "@ui-kitten/components";
+
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -12,17 +20,36 @@ const Login = () =>{
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const navigate = useNavigation();
 
-    const {control, handleSubmit, formState:{errors}} = useForm({
+    const {control, handleSubmit, formState:{errors}, reset} = useForm({
         defaultValues:{
             correo:'',
             password:''
         }
     });
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = (data) =>{
+      console.log(data);
+      reset();
+      alerLogin();
+    }
 
     const toogleSecureEntry = () => {
         setSecureTextEntry(!secureTextEntry);
+    }
+
+    const alerLogin = () =>{
+      Alert.alert(
+        "Reforesta MX",
+        "Inicio de Sesión",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: NavigateOptions }
+        ]
+      );
     }
 
     const renderIcon = (props) => (
@@ -39,47 +66,62 @@ const Login = () =>{
         navigate.navigate("Reforesta MX");
     }
 
+    const getFormErrorMessage = (name) =>{
+      return errors[name] && <Text status='danger'>{errors[name].message}</Text>
+    }
+
     return(
         <>
         <ScrollView>
-        <View>
+        <View style={styles.view}>
 
       <Controller
+        name="correo"
         control={control}
         rules={{
          required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <Input
+            size='large'
+            placeholder="Correo"
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
           />
         )}
-        name="Correo"
+        
       />
-      {errors.correo && <Text>Este campo es requerido.</Text>}
+      {errors.correo && <Text status='danger'>El correo es requerido.</Text>}
 
       <Controller
+        name="password"
         control={control}
         rules={{
-         maxLength: 100,
+         required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <Input
+            size='large'
+            placeholder="Contraseña"
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
           />
         )}
-        name="Contraseña"
       />
+      {errors.password && <Text status='danger'>La contraseña es requerida.</Text>}
 
-
-      <Button onPress={handleSubmit(onSubmit)} title="ss"></Button>
+    <View style={styles.button}>
+        <Button onPress={handleSubmit(onSubmit)}>Iniciar Sesión</Button>
+        <Button appearance='outline' style={styles.button} onPress={NavigateAddUser}>Crear Cuenta</Button>
     </View>
+      
+    </View>
+
+
         </ScrollView>
 
         </>
@@ -93,7 +135,7 @@ const styles = StyleSheet.create({
     },
     button:{
         flex:1,
-        marginTop:10,
+        marginTop:15,
         
     },
     view:{
