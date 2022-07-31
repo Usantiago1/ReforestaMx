@@ -9,7 +9,7 @@ const Prueba1 = () =>{
     return(
         <>
         <ScrollView>
-            <Text>Preba1</Text>
+            <Text>Calidad del Aire</Text>
         </ScrollView>
 
         </>
